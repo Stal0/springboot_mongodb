@@ -1,6 +1,7 @@
 package com.stalixo.springbootmongo.services;
 
 import com.stalixo.springbootmongo.domain.User;
+import com.stalixo.springbootmongo.dto.UserDTO;
 import com.stalixo.springbootmongo.repository.UserRepository;
 import com.stalixo.springbootmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,15 @@ public class UserService {
 
     public User findById(String id) {
         Optional<User> user = repo.findById(id);
-
         user.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
-
         return user.get();
+    }
+
+    public User insert(User obj) {
+        return repo.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDTO) {
+        return new User(objDTO.getId(), objDTO.getName(), objDTO.getEmail());
     }
 }
